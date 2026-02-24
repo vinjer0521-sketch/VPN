@@ -1,4 +1,5 @@
-# 快速搭建个人VPN科学上网翻墙完全教程
+<img width="1959" height="192" alt="image" src="https://github.com/user-attachments/assets/69847952-4e80-4fc9-8ea5-6feededee11c" /># Shadowsocks + obfs 一键部署指南 (Docker)
+本文档基于 CentOS 9 编写，适用于在 VPS 上快速搭建带混淆的 Shadowsocks 服务。所有步骤均已测试通过，请按顺序执行。
 
 ## 搭建自己的 VPN
 
@@ -6,9 +7,9 @@
 
 ## 优惠购买云服务器vultr
 
-在搭建之前需要一台境外的云服务器，而 [vultr](https://www.vultr.com/?ref=8872889) 服务商比较稳定，安全，相当于境内的阿里云。
+在搭建之前需要一台境外的云服务器，而 [vultr]([https://www.vultr.com/?ref=9871882]) 服务商比较稳定，安全，相当于境内的阿里云。
 
-值得说的一点是， [vultr](https://www.vultr.com/?ref=8872889) 给新用户的福利相当给力，充值 10 美元就可以获取 100 美元，你可以点击 [vultr 专属赠送新用户 100 美元](https://www.vultr.com/?ref=8872889) 进去抢先注册。
+值得说的一点是， [vultr](https://www.vultr.com/?ref=9871882) 给新用户的福利相当给力，登录即可赠送100-300美金免费额度，你可以点击 [vultr 专属赠送新用户 100 美元](https://www.vultr.com/?ref=9871882) 进去抢先注册。
 
 右上角有注册按钮，你也可以切换成中文界面：
 
@@ -20,7 +21,7 @@
 
 ![](https://user-images.githubusercontent.com/84239400/119020042-4ee3a080-b98d-11eb-8341-bfc30f4b103c.png)
 
-进去之后你可以看到这个页面，说明你已经通过 [vultr 专属优惠链接](https://www.vultr.com/?ref=8872889) 获得了 100 美元赠送的资格：
+进去之后你可以看到这个页面，说明你已经通过 [vultr 专属优惠链接](https://www.vultr.com/?ref=9871882) 获得了 100 美元赠送的资格：
 
 ![](https://user-images.githubusercontent.com/84239400/119020173-733f7d00-b98d-11eb-8ecc-a1afeb556fe6.png)
 
@@ -34,40 +35,44 @@
 
 ### Choose Server 选择服务器
 
-选择 Cloud Compute 即可：
+选择 Dedicated cpu/Shared cpu均可（后者性价比更高） 即可：
 
-![](https://user-images.githubusercontent.com/84239400/119020373-af72dd80-b98d-11eb-8478-02d735b82709.png)
+![](<img width="423" height="432" alt="image" src="https://github.com/user-attachments/assets/ca31bc55-b042-489a-be2b-f7d53472af82" />
+)
 
 ### Server Location
 
-服务器的位置，可以选择美国地区，比如纽约：
+服务器的位置，可以选择美国地区，比如纽约；也可以选择亚洲的服务器，如日本的东京、大阪：
 
-![](https://user-images.githubusercontent.com/84239400/119020467-cadde880-b98d-11eb-8927-d3d837bbc20c.png)
+<img width="1026" height="609" alt="image" src="https://github.com/user-attachments/assets/5a42d70e-6cf6-4a83-bdd6-67c24804597e" />
+
 
 ### Server Type
 
-服务器类型，CentOS 8 x64 系统：
+这里我们选择内存和带宽，1G内存用于部署VPN完全够用，带宽则取决于你每个月的使用情况自己决定
 
-<img width="1297" alt="vpn搭建教程" src="https://user-images.githubusercontent.com/84239400/119020720-198b8280-b98e-11eb-9df3-19bf5a187a1e.png">
+<<img width="1583" height="870" alt="image" src="https://github.com/user-attachments/assets/4e3f00fc-7a35-488e-9751-0769834346ca" />
+>
 
 ### Server Size
 
-内存，个人使用10G完全够用，这里选择3.5美元一个月，性价比高，注意不要选择IPv6 ONLY的，要不然无法搭建使用。
+这里可以看到要部署的服务器的情况，如果需要选择自动备份，每月需要多1.2刀，注意不要选择IPv6 ONLY的，要不然无法搭建使用。
 
-<img width="1240" alt="vpn搭建教程" src="https://user-images.githubusercontent.com/84239400/119020895-4a6bb780-b98e-11eb-9ac8-3cdd4f4397de.png">
+<img width="1044" height="1335" alt="image" src="https://github.com/user-attachments/assets/da7394bf-a88a-4b2f-afc4-30d323f78671" />
 
-选择完了之后，下面的其它东西都不需要填，直接点击右下角 Deploy Now 就可以了：
 
-![](https://user-images.githubusercontent.com/84239400/119020981-68391c80-b98e-11eb-9f16-00c75de88eeb.png)
+选择完了之后，我们点击下面的Configure Software选择需要使用的操作系统，选择CentOS（9 Stream X64），
 
-这时候你就拥有了自己的一台云服务器了：
+<img width="1056" height="1206" alt="image" src="https://github.com/user-attachments/assets/f8d2f838-9d6f-44bb-b686-3ffdebe8ff94" />
 
-<img width="1261" alt="VPN搭建教程" src="https://user-images.githubusercontent.com/84239400/119021075-86068180-b98e-11eb-82a9-71edb9934f23.png">
 
+点击Configure，需要一点时间用于部署。这时候你就拥有了自己的一台云服务器了：
+
+<img width="1959" height="192" alt="image" src="https://github.com/user-attachments/assets/f2c060c2-3720-4336-aed2-91e26d53137a" />
 
 点击 Cloud Instance ，可以看到你服务器的 IP 地址和密码：
 
-<img width="1308" alt="vpn搭建教程" src="https://user-images.githubusercontent.com/84239400/119021183-a20a2300-b98e-11eb-8ff4-7f18d3e3bb80.png">
+<img width="1860" height="807" alt="image" src="https://github.com/user-attachments/assets/55c59cb9-3beb-43cb-adea-3ac2deb3c941" />
 
 
 ## 连接到你的服务器
@@ -81,6 +86,11 @@ windows 可以下载[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/l
 ![](https://user-images.githubusercontent.com/84239400/119023900-037fc100-b992-11eb-85ea-525a61a69657.png)
 
 Port 默认 22，Connection Type 选择 SSH，接着点击 Open，连接进去之后输入你云服务器的密码。
+
+为了便于我们粘贴，在Window-Selection中选择Windows，这样我们可以直接使用鼠标右键进行复制和粘贴
+
+<img width="675" height="684" alt="image" src="https://github.com/user-attachments/assets/cd89ebed-e5be-4098-b32d-8fde647941af" />
+
 
 ### Linux 和 MacOS 连接到 vultr 服务器
 
@@ -100,43 +110,131 @@ ssh root@xx.xx.xxx.xx
 
 ## 快速搭建 VPN
 
-### 安装必要的库：
+### 安装Docker
 
 ```
-sudo yum -y install wget gcc gcc-c++ autoconf automake make
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf install -y docker-ce docker-ce-cli containerd.io
+sudo systemctl start docker
+sudo systemctl enable docker
 ```
 
-### 安装 VPN 脚本 ss.sh:
+<img width="1010" height="584" alt="image" src="https://github.com/user-attachments/assets/c222eac3-1707-414a-a416-4c935030a712" />
+
+
+### 验证安装:
 
 ```
-wget –no-check-certificate -O ss.sh https://raw.githubusercontent.com/sucong426/VPN/main/ss.sh
+sudo docker version
+```
+<img width="771" height="618" alt="image" src="https://github.com/user-attachments/assets/78e8248b-36b4-46e5-a458-d08ff83a73fa" />
+
+
+### 准备 Shadowsocks 配置文件，创建配置目录和文件，请将 your_password 替换为强密码，端口可自行修改,加密方式为aes-256-gcm
+
+```
+mkdir -p ~/shadowsocks
+cat > ~/shadowsocks/config.json <<EOF
+{
+    "server": "0.0.0.0",
+    "server_port": 11111,
+    "password": "your_password",
+    "method": "aes-256-gcm",
+    "fast_open": false
+}
+EOF
 ```
 
-### 执行脚本
+<img width="480" height="222" alt="image" src="https://github.com/user-attachments/assets/0e4126c0-b72c-45c0-9f8c-202a78055eb7" />
+
+###构建包含 obfs 插件的 Docker 镜像，官方镜像缺少 obfs-server，我们需要手动构建包含该插件的镜像。
 
 ```
-sh ss.sh
+mkdir -p ~/shadowsocks-obfs && cd ~/shadowsocks-obfs
+```
+创建Dockerfile：
+
+```
+cat > Dockerfile <<EOF
+FROM shadowsocks/shadowsocks-libev
+
+USER root
+
+RUN set -ex \\
+    && apk add --no-cache --virtual .build-deps \\
+        autoconf \\
+        automake \\
+        build-base \\
+        libtool \\
+        linux-headers \\
+        gettext \\
+        asciidoc \\
+        xmlto \\
+        libsodium-dev \\
+        libev-dev \\
+        c-ares-dev \\
+        mbedtls-dev \\
+        pcre2-dev \\
+        git \\
+    && git clone https://github.com/shadowsocks/simple-obfs.git /tmp/simple-obfs \\
+    && cd /tmp/simple-obfs \\
+    && git submodule update --init --recursive \\
+    && ./autogen.sh \\
+    && ./configure --disable-documentation \\
+    && make \\
+    && make install \\
+    && apk del .build-deps \\
+    && rm -rf /tmp/simple-obfs
+
+ENV PATH="/usr/local/bin:\${PATH}"
+EOF
 ```
 
-<img width="791" alt="vpn搭建教程" src="https://user-images.githubusercontent.com/84239400/119024123-45a90280-b992-11eb-9ea5-514542f71594.png">
+构建镜像（耗时约几分钟）：
 
+```
+docker build -t my-ss-obfs .
+```
 
-设置你的 VPN 密码。
+###运行 Shadowsocks 容器：
+使用刚构建的镜像启动容器，映射端口并启用 HTTP 混淆
 
-接着输入你 VPN 的端口，可以直接回车。
+```
+sudo docker run -d --name ss-server \
+    -v ~/shadowsocks/config.json:/etc/shadowsocks-libev/config.json \
+    -p 11111:11111/tcp \
+    -p 11111:11111//udp \
+    --restart always \
+    my-ss-obfs \
+    ss-server -c /etc/shadowsocks-libev/config.json \
+    --plugin obfs-server \
+    --plugin-opts "obfs=http;obfs-host=www.bing.com"
+```
+<img width="887" height="219" alt="image" src="https://github.com/user-attachments/assets/01a4393a-903a-419b-8809-16ff4dc11ec7" />
 
-接着输入加密方式，你可以选择 7:
+查看启动日志，确认服务正常：
 
-<img width="574" alt="vpn搭建教程" src="https://user-images.githubusercontent.com/84239400/119024193-59546900-b992-11eb-8d71-81681e582e38.png">
+```
+sudo docker logs ss-server
+```
+预期输出为：
+<img width="918" height="222" alt="image" src="https://github.com/user-attachments/assets/93f2c81e-0cab-4408-ab5d-df4ec2965bed" />
+可以看到11111为我的端口，随机混淆端口为36757
 
-设置好了之后，按一下回车就可以开始安装，稍等一会，出现以下信息说明安装成功：
+###防火墙放行端口
+```
+sudo firewall-cmd --zone=public --add-port=11111/tcp --permanent
+sudo firewall-cmd --add-port=11111/udp --permanent
+sudo firewall-cmd --reload
+```
+<img width="951" height="156" alt="image" src="https://github.com/user-attachments/assets/e701be39-9249-4f11-922f-3b0fa8012d6c" />
+查看已放行端口：
+```
+sudo firewall-cmd --zone=public --list-ports
+```
+<img width="927" height="48" alt="image" src="https://github.com/user-attachments/assets/26910422-7c5f-4fd5-9565-b158fde0a8ba" />
+可以看到11111的端口已被放行
 
-<img width="645" alt="vpn搭建教程" src="https://user-images.githubusercontent.com/84239400/119024277-6bcea280-b992-11eb-90a9-7fa45cbdc97d.png">
-
-
-这是属于你自己 VPN 的 IP 地址，端口号，密码，加密方式。把它们复制下来，然后就可以使用客户端连接这个代理从而访问Google了。
-
-复制号信息之后，服务器连接可以关掉，它会一直运行。
 
 
 
@@ -148,7 +246,25 @@ sh ss.sh
 
  ### 手机使用 VPN
 
-去应用市场下载 shadowsocks，配置好你自己云服务器得到的 IP 地址，端口号，密码，加密方式，开启代理即可访问。
+去应用市场下载 shadowsocks，配置好你自己云服务器得到的 IP 地址（你的yultr服务器的IP），端口号，密码，加密方式，开启代理即可访问。
+
+
+### 客户端配置
+下载simple-obfhttps://github.com/shadowsocks/simple-obfs/releases/tag/v0.0.5，解压文件，将其中的obfs-local.exe文件放到Shadowsocks文件夹中
+<img width="1062" height="612" alt="image" src="https://github.com/user-attachments/assets/a36fd22f-3d75-40d6-b930-1a7b39b64b5f" />
+
+在 Shadowsocks 客户端中配置以下参数（以 Windows为例）：
+服务器地址：你的服务器公网 IP
+端口：11111
+密码：your_password（与配置文件一致）
+加密方式：aes-256-gcm
+插件：选择 simple-obfs 或 obfs-local
+插件选项：obfs=http;obfs-host=www.bing.com
+<img width="773" height="699" alt="image" src="https://github.com/user-attachments/assets/03efeb80-f298-49e0-8366-29400b6332d4" />
+
+
+
+
 
 ## 访问 Google
 
