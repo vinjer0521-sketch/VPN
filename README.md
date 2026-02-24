@@ -1,4 +1,4 @@
-<img width="1959" height="192" alt="image" src="https://github.com/user-attachments/assets/69847952-4e80-4fc9-8ea5-6feededee11c" /># Shadowsocks + obfs 一键部署指南 (Docker)
+Shadowsocks + obfs 一键部署指南 (Docker)
 本文档基于 CentOS 9 编写，适用于在 VPS 上快速搭建带混淆的 Shadowsocks 服务。所有步骤均已测试通过，请按顺序执行。
 
 ## 搭建自己的 VPN
@@ -210,7 +210,8 @@ sudo docker run -d --name ss-server \
     --plugin obfs-server \
     --plugin-opts "obfs=http;obfs-host=www.bing.com"
 ```
-<img width="887" height="219" alt="image" src="https://github.com/user-attachments/assets/01a4393a-903a-419b-8809-16ff4dc11ec7" />
+<img width="951" height="284" alt="image" src="https://github.com/user-attachments/assets/20b7e8bf-3c87-48fd-bd38-e7addee2add1" />
+
 
 查看启动日志，确认服务正常：
 
