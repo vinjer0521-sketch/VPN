@@ -8,7 +8,7 @@ Shadowsocks Docker 管理指令集：
 
 1.镜像构建（仅首次执行）
 如果尚未构建包含 obfs 插件的镜像，执行以下步骤：
-'''
+```
 # 创建构建目录并进入
 mkdir -p ~/shadowsocks-obfs && cd ~/shadowsocks-obfs
 
@@ -49,7 +49,7 @@ EOF
 
 # 构建镜像
 docker build -t my-ss-obfs .
-'''
+```
 
 
 
