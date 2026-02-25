@@ -243,7 +243,7 @@ sudo firewall-cmd --zone=public --list-ports
 
 可以看到11111的端口已被放行
 
-###（可选）开启 BBR 加速
+### （可选）开启 BBR 加速
 ```
 echo "net.core.default_qdisc=fq" | sudo tee -a /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" | sudo tee -a /etc/sysctl.conf
