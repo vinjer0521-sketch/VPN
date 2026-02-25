@@ -1,4 +1,5 @@
-Shadowsocks + obfs 一键部署指南 (Docker)
+### Shadowsocks + obfs 一键部署指南 (Docker)
+
 本文档基于 CentOS 9 编写，适用于在 VPS 上快速搭建带混淆的 Shadowsocks 服务。所有步骤均已测试通过，请按顺序执行。
 
 ## 搭建自己的 VPN
@@ -33,33 +34,30 @@ Shadowsocks + obfs 一键部署指南 (Docker)
 
 点击页面左边菜单栏的 「Products」进入服务器选购页面。
 
-### Choose Server 选择服务器
+### 选择服务器
 
 选择 Dedicated cpu/Shared cpu均可（后者性价比更高） 即可：
 
 ![](<img width="423" height="432" alt="image" src="https://github.com/user-attachments/assets/ca31bc55-b042-489a-be2b-f7d53472af82" />
 )
 
-### Server Location
+### 选择服务器地址
 
 服务器的位置，可以选择美国地区，比如纽约；也可以选择亚洲的服务器，如日本的东京、大阪：
 
 <img width="1026" height="609" alt="image" src="https://github.com/user-attachments/assets/5a42d70e-6cf6-4a83-bdd6-67c24804597e" />
 
 
-### Server Type
+### 选择服务器类型
 
 这里我们选择内存和带宽，1G内存用于部署VPN完全够用，带宽则取决于你每个月的使用情况自己决定
 
-<<img width="1583" height="870" alt="image" src="https://github.com/user-attachments/assets/4e3f00fc-7a35-488e-9751-0769834346ca" />
->
+<img width="1583" height="870" alt="image" src="https://github.com/user-attachments/assets/4e3f00fc-7a35-488e-9751-0769834346ca" />
 
-### Server Size
 
 这里可以看到要部署的服务器的情况，如果需要选择自动备份，每月需要多1.2刀，注意不要选择IPv6 ONLY的，要不然无法搭建使用。
 
 <img width="1044" height="1335" alt="image" src="https://github.com/user-attachments/assets/da7394bf-a88a-4b2f-afc4-30d323f78671" />
-
 
 选择完了之后，我们点击下面的Configure Software选择需要使用的操作系统，选择CentOS（9 Stream X64），
 
@@ -127,6 +125,7 @@ sudo systemctl enable docker
 ```
 sudo docker version
 ```
+
 <img width="771" height="618" alt="image" src="https://github.com/user-attachments/assets/78e8248b-36b4-46e5-a458-d08ff83a73fa" />
 
 
@@ -147,11 +146,12 @@ EOF
 
 <img width="480" height="222" alt="image" src="https://github.com/user-attachments/assets/0e4126c0-b72c-45c0-9f8c-202a78055eb7" />
 
-###构建包含 obfs 插件的 Docker 镜像，官方镜像缺少 obfs-server，我们需要手动构建包含该插件的镜像。
+### 构建包含 obfs 插件的 Docker 镜像，官方镜像缺少 obfs-server，我们需要手动构建包含该插件的镜像。
 
 ```
 mkdir -p ~/shadowsocks-obfs && cd ~/shadowsocks-obfs
 ```
+
 创建Dockerfile：
 
 ```
@@ -196,7 +196,7 @@ EOF
 docker build -t my-ss-obfs .
 ```
 
-###运行 Shadowsocks 容器：
+### 运行 Shadowsocks 容器：
 使用刚构建的镜像启动容器，映射端口并启用 HTTP 混淆
 
 ```
@@ -210,6 +210,7 @@ sudo docker run -d --name ss-server \
     --plugin obfs-server \
     --plugin-opts "obfs=http;obfs-host=www.bing.com"
 ```
+
 <img width="951" height="284" alt="image" src="https://github.com/user-attachments/assets/20b7e8bf-3c87-48fd-bd38-e7addee2add1" />
 
 
@@ -218,22 +219,28 @@ sudo docker run -d --name ss-server \
 ```
 sudo docker logs ss-server
 ```
+
 预期输出为：
+
 <img width="918" height="222" alt="image" src="https://github.com/user-attachments/assets/93f2c81e-0cab-4408-ab5d-df4ec2965bed" />
+
 可以看到11111为我的端口，随机混淆端口为36757
 
-###防火墙放行端口
+### 防火墙放行端口
 ```
 sudo firewall-cmd --zone=public --add-port=11111/tcp --permanent
 sudo firewall-cmd --add-port=11111/udp --permanent
 sudo firewall-cmd --reload
 ```
 <img width="951" height="156" alt="image" src="https://github.com/user-attachments/assets/e701be39-9249-4f11-922f-3b0fa8012d6c" />
+
 查看已放行端口：
 ```
 sudo firewall-cmd --zone=public --list-ports
 ```
+
 <img width="927" height="48" alt="image" src="https://github.com/user-attachments/assets/26910422-7c5f-4fd5-9565-b158fde0a8ba" />
+
 可以看到11111的端口已被放行
 
 ###（可选）开启 BBR 加速
@@ -242,6 +249,7 @@ echo "net.core.default_qdisc=fq" | sudo tee -a /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
+
 <img width="954" height="153" alt="image" src="https://github.com/user-attachments/assets/a8d43acb-0dec-4656-8f5a-5104022b80cf" />
 
 验证 BBR 已启用：
@@ -249,6 +257,7 @@ sudo sysctl -p
 sysctl net.ipv4.tcp_congestion_control   # 应输出 bbr
 lsmod | grep bbr                          # 应有 tcp_bbr 模块
 ```
+
 <img width="864" height="90" alt="image" src="https://github.com/user-attachments/assets/3225bce6-0e6c-44d8-a8a4-e46e45aaeb2e" />
 
 
@@ -263,9 +272,9 @@ lsmod | grep bbr                          # 应有 tcp_bbr 模块
 
 去应用市场下载 shadowsocks，配置好你自己云服务器得到的 IP 地址（你的yultr服务器的IP），端口号，密码，加密方式，开启代理即可访问。
 
-
 ### 客户端配置
 下载simple-obfhttps://github.com/shadowsocks/simple-obfs/releases/tag/v0.0.5，解压文件，将其中的obfs-local.exe文件放到Shadowsocks文件夹中
+
 <img width="1062" height="612" alt="image" src="https://github.com/user-attachments/assets/a36fd22f-3d75-40d6-b930-1a7b39b64b5f" />
 
 在 Shadowsocks 客户端中配置以下参数（以 Windows为例）：
@@ -275,10 +284,8 @@ lsmod | grep bbr                          # 应有 tcp_bbr 模块
 加密方式：aes-256-gcm
 插件：选择 simple-obfs 或 obfs-local
 插件选项：obfs=http;obfs-host=www.bing.com
+
 <img width="773" height="699" alt="image" src="https://github.com/user-attachments/assets/03efeb80-f298-49e0-8366-29400b6332d4" />
-
-
-
 
 
 ## 访问 Google
