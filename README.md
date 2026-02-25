@@ -236,9 +236,20 @@ sudo firewall-cmd --zone=public --list-ports
 <img width="927" height="48" alt="image" src="https://github.com/user-attachments/assets/26910422-7c5f-4fd5-9565-b158fde0a8ba" />
 可以看到11111的端口已被放行
 
+###（可选）开启 BBR 加速
+```
+echo "net.core.default_qdisc=fq" | sudo tee -a /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+<img width="954" height="153" alt="image" src="https://github.com/user-attachments/assets/a8d43acb-0dec-4656-8f5a-5104022b80cf" />
 
-Docker指令集：
-
+验证 BBR 已启用：
+```
+sysctl net.ipv4.tcp_congestion_control   # 应输出 bbr
+lsmod | grep bbr                          # 应有 tcp_bbr 模块
+```
+<img width="864" height="90" alt="image" src="https://github.com/user-attachments/assets/3225bce6-0e6c-44d8-a8a4-e46e45aaeb2e" />
 
 
 
