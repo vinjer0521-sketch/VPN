@@ -203,7 +203,7 @@ docker build -t my-ss-obfs .
 sudo docker run -d --name ss-server \
     -v ~/shadowsocks/config.json:/etc/shadowsocks-libev/config.json \
     -p 11111:11111/tcp \
-    -p 11111:11111//udp \
+    -p 11111:11111/udp \
     --restart always \
     my-ss-obfs \
     ss-server -c /etc/shadowsocks-libev/config.json \
