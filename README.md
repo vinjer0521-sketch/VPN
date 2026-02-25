@@ -12,7 +12,7 @@ Shadowsocks Docker 管理指令集：
 
 使用的端口：11111（可根据实际替换）
 
-1.镜像构建（仅首次执行）
+###1.镜像构建（仅首次执行）
 如果尚未构建包含 obfs 插件的镜像，执行以下步骤：
 ```
 # 创建构建目录并进入
@@ -57,7 +57,7 @@ EOF
 docker build -t my-ss-obfs .
 ```
 
-2. 创建/编辑配置文件
+###2. 创建/编辑配置文件
 
 配置文件位于 ~/shadowsocks/config.json，可用任意编辑器修改：
 ```
@@ -83,7 +83,7 @@ vi ~/shadowsocks/config.json
 ```
 注意：server_port 必须与后续 Docker 端口映射的容器端口一致。
 
-3. 启动容器
+###3. 启动容器
 
 首次启动
 ```
@@ -103,7 +103,7 @@ sudo docker run -d --name ss-server \
 sudo docker stop ss-server && sudo docker rm ss-server
 # 然后执行上述 run 命令
 ```
-4. 查看容器状态
+###4. 查看容器状态
 查看运行中的容器：
 ```
 sudo docker ps
@@ -129,7 +129,7 @@ sudo docker logs -f ss-server
 sudo docker port ss-server
 ```
 
-5. 容器生命周期管理
+###5. 容器生命周期管理
 操作命令
 ```
 停止容器	sudo docker stop ss-server
@@ -139,13 +139,13 @@ sudo docker port ss-server
 强制删除	sudo docker rm -f ss-server
 ```
 
-6. 修改配置后的生效方法
+###6. 修改配置后的生效方法
 修改了 config.json 后，需要重启容器使配置生效：
 ```
 sudo docker restart ss-server
 ```
 
-7. 修改端口或插件选项
+###7. 修改端口或插件选项
 如果需要更改端口或混淆参数，建议删除旧容器并重新创建（因为端口映射在创建时固定）。
 ```
 # 停止并删除旧容器
@@ -166,7 +166,7 @@ sudo docker run -d --name ss-server \
     --plugin-opts "obfs=tls;obfs-host=www.bing.com"   # 示例改为 TLS 混淆
 ```
 
-8. 进入容器内部（调试用）
+###8. 进入容器内部（调试用）
 ```
 sudo docker exec -it ss-server sh
 ```
@@ -178,7 +178,7 @@ cat /etc/shadowsocks-libev/config.json
 exit
 ```
 
-9. 镜像管理
+###9. 镜像管理
 列出本地镜像
 ```
 docker images
@@ -195,7 +195,7 @@ docker rmi my-ss-obfs
 docker pull shadowsocks/shadowsocks-libev
 ```
 
-10. 防火墙与安全组
+###10. 防火墙与安全组
 无论容器如何配置，务必确保主机防火墙和云平台安全组放行了映射到主机的端口：
 ```
 sudo firewall-cmd --zone=public --add-port=11111/tcp --permanent
