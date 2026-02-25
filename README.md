@@ -237,6 +237,9 @@ sudo firewall-cmd --zone=public --list-ports
 可以看到11111的端口已被放行
 
 
+Docker指令集：
+
+
 
 
 ## 开始使用 VPN
